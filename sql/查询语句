@@ -1,0 +1,63 @@
+# 查询语句
+
+## student 表
+
+| id   | name | age  | gender | grade_id |
+| ---- | ---- | ---- | ------ | -------- |
+| 1    | 小红 | 26   | 女     | 3        |
+| 2    | 小明 | 22   | 男     | 2        |
+| 3    | 小刚 | 18   | 男     | 1        |
+
+## grade 表
+
+| id   | name   | class_teacher |
+| ---- | ------ | ------------- |
+| 1    | 一年级 | 张一          |
+| 2    | 二年级 | 张二          |
+| 3    | 三年级 | 张三          |
+
+
+
+## 单表查询 
+
+``` sql
+-- 查询 student 表 所有数据
+select * from student;
+
+-- 查询 student 表 年龄大于 18 的数据
+select * from student where age > 18;
+
+-- 查询 student 表 年龄大于18并且是女性的数据
+select * from student where age > 18 and gender = '女';
+
+-- 只查询所有名称
+select name from student;
+
+-- 语句关键字解读
+select * from student;
+
+select -> 选择器
+from   -> 目标
+*	   -> 表中的所有字段
+连起来解读就是 选择查询 student 表中的所有字段
+```
+
+
+
+## 联合查询
+
+``` sql
+-- 查询学生表并带出各自年级班主任
+select 
+    s.*,
+    g.class_teacher
+from student as s 
+	left join grade as g on g.id = s.grade_id
+
+-- 语句解释
+left join -> 左联查询 以 student 表为主表 grade 为副表, student表中的 grade_id 字段关联了 年级表 grade 中的 id 字段，所以能查询到学生所属年级的班主任。
+左联查询的特性： 当副表班主任数据没有的时候，只显示学生表，g.class_teacher 列会显示 Null 
+```
+
+
+
